@@ -65,3 +65,7 @@ code {
     display: block;
     word-wrap: normal;
 }
+
+pre > code {
+  padding: 20px;
+}
