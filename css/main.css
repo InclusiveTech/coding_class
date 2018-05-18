@@ -31,18 +31,19 @@ img {
 .navigation {
     width: 600px;
     text-decoration:underline;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    height: 20px
+    background-color: #fff;
+    color: #1ea1f3;
+    height: 24px
 }
 
 
 #prev, #curr, #next {
     float: left;
     width: 200px;
-    color: white;
-    text-decoration: underline;
+    color: #1ea1f3;
+    text-decoration: none;
     text-align: center;
+    margin: 3px 0px;
 }
 
 #leftPane {
