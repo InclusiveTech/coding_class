@@ -1,0 +1,29 @@
+<html>
+<head>
+  <link rel="stylesheet" href="css/forecast.css">
+
+</head>
+<body>
+   
+  <div class="alert alert-success" id="forecast-result" role="alert"></div>
+
+  <div class="input-group">
+      <input type="text" id="location" placeholder="Location">
+      <button id="forcast-button" onclick="getWeather()">🌤 Show me the weather  ☔️</button>
+  </div>
+
+  <script>
+    function getWeather() {
+        fetch('https://api.openweathermap.org/data/2.5/weather?q=London&APPID=c447c6ba8f930b4bca8a85e4f96c7b8a')
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(myJson) {
+                var forecastResult = document.getElementById("forecast-result")
+                forecastResult.style.visibility = "visible"
+                forecastResult.innerHTML = `In <strong>London</strong> the weather is <strong>${myJson.weather}</strong> and the temperature is <strong>${myJson.main.temp}</strong> degrees Celsius.`
+          });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>JavaScript Power</h1>
+    <p>Power this lightbulb by using the HTML DOM to assign an "onclick" event to a button element.</p>
+
+    <button onClick="turnOn()">Turn on the light</button>
+
+    <img id="lightbulb" src="light_off.png" style="width:100px">
+
+    <button onClick="turnOff()">Turn off the light</button>
+
+    <script>
+        function turnOn() {
+            document.getElementById('lightbulb').src = "light_on.png"
+        }
+
+        function turnOff() {
+            document.getElementById('lightbulb').src = "light_off.png"
+        }
+    </script>
+</body>
+</html>
