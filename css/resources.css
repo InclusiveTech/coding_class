@@ -3,12 +3,12 @@ body {
   max-width:80%;
   line-height:1.6;
   font-size:18px;
-  color:#444;
+  color:#333;
   padding:0 10px;
   font-family: 'Open Sans', sans-serif;
 }
-h1,h2,h3 {
-  line-height:1.2
+h2 {
+  margin-top: 40px;
 }
 a {
   color: #1da1f2;
@@ -39,33 +39,32 @@ nav li a:hover {
   background-color: #177dbb;
   color: #fff;
 }
-
 pre {
-    font-family: Courier, monospace;
-    font-size: 95%;
-    line-height: 140%;
-    overflow: auto;
-    white-space: pre;
-    white-space: pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -o-pre-wrap;
-}       
-
-code {
-    font-family: Monaco, Consolas, monospace;
-    font-size: 95%;
-    line-height: 140%;
-    white-space: pre;
-    white-space: pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -o-pre-wrap;
-    background: #F1F1F1;
-    border: 1px solid #E1E1E1;
-    border-radius: 5px;
-    display: block;
-    word-wrap: normal;
+  font-family: Courier, monospace;
+  font-size: 95%;
+  line-height: 140%;
+  overflow: auto;
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
 }
-
+code {
+  font-family: Monaco, Consolas, monospace;
+  font-size: 95%;
+  line-height: 140%;
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  background: #F1F1F1;
+  border: 1px solid #E1E1E1;
+  border-radius: 5px;
+  word-wrap: normal;
+  padding: 3px;
+  color:#555;
+}
 pre > code {
   padding: 20px;
+  display: block;
 }
