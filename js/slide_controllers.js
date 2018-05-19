@@ -13,7 +13,8 @@ app.directive('slideImage', function() {
 
 app.controller('SlideController', function($scope, $sce, localStorageService) {
     $scope.slideImages = [
-'slides/001.jpg',
+            'slides/001.jpg',
+            'slides/002.jpg',
         ];
     var html = localStorageService.get('html') || "";
     $scope.data = {htmlString:html, trustedVersion:html}
