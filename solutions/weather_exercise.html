@@ -28,10 +28,10 @@
         .then(function(response) {
           return response.json();
         })
-        .then(function(myJson) {
+        .then(function(weatherJson) {
           var forecastResult = document.getElementById("forecast-result")
           forecastResult.style.visibility = "visible"
-          forecastResult.innerHTML = `In <strong>${weatherLocation}</strong> the weather is <strong>${myJson.weather[0].main}</strong> and the temperature is <strong>${myJson.main.temp}</strong> degrees Celsius.`
+          forecastResult.innerHTML = `In <strong>${weatherLocation}</strong> the weather is <strong>${weatherJson.weather[0].main}</strong> and the temperature is <strong>${weatherJson.main.temp}</strong> degrees Celsius.`
         });
       } else {
         var forecastResult = document.getElementById("forecast-result")
