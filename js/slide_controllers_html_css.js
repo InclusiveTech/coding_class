@@ -129,6 +129,8 @@ app.controller('SlideController', function($scope, $sce, localStorageService) {
         'slides/html-css-curriculum/113.png',
         'slides/html-css-curriculum/114.png',
         'slides/html-css-curriculum/115.png',
+        'slides/html-css-curriculum/116.png',
+        'slides/html-css-curriculum/117.png',
         ];
     var html = localStorageService.get('html') || "";
     $scope.data = {htmlString:html, trustedVersion:html}
