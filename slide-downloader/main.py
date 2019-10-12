@@ -1,3 +1,10 @@
+# Usage:
+# python3 slide-downloader/main.py [presentation] [slides...]
+# If run with no arguments, will update all slides from all presentations.
+# If presentation is specified, will only update from that presentation.
+# If presentation _and_ slides are specified, will only update those slides from that presentation
+# (where slides are 1-indexed, as they appear in Google Slides and in the timettocode webapp).
+
 import json
 import os
 import pickle
@@ -32,6 +39,16 @@ if not os.path.exists(auth_json_file):
     print(f"File {auth_json_file} did not exist; see instructions in {__file__}", file=sys.stderr)
     sys.exit(1)
 
+if len(sys.argv) >= 2:
+    presentation_filter = lambda p: p.presentation_id == sys.argv[1]
+else:
+    presentation_filter = lambda _: True
+
+if len(sys.argv) >= 3:
+    slides = {int(s) for s in sys.argv[2:]}
+    slide_filter = lambda s: s in slides
+else:
+    slide_filter = lambda _: True
 
 @dataclass
 class Config:
@@ -59,6 +76,9 @@ presentations = [
         slides_controller_js_path="js/slide_controllers_js.js",
     ),
 ]
+if len(sys.argv) >= 2:
+    presentation_id = sys.argv[1]
+    presentations = [p for p in presentations if presentation_filter(p)]
 
 flow = InstalledAppFlow.from_client_secrets_file(
     auth_json_file, ["https://www.googleapis.com/auth/presentations.readonly"]
@@ -77,8 +97,10 @@ for presentation in presentations:
     with os.scandir(presentation.slides_dir) as dirents:
         for dirent in sorted(dirents, key=lambda d: d.name):
             if dirent.is_file() and dirent.name.lower().endswith(".png"):
-                print(f"Removing {dirent.path}")
-                os.remove(dirent.path)
+                slide_id = int(dirent.name[:-4])
+                if slide_filter(slide_id):
+                    print(f"Removing {dirent.path}")
+                    os.remove(dirent.path)
 
     with open(presentation.slides_controller_js_path, "w") as controller_js:
         controller_js.write(
@@ -103,18 +125,19 @@ app.controller('SlideController', function($scope, $sce, localStorageService) {
 
         slides_array = fetch(presentation.url).json()["slides"]
         for i, slide in enumerate(slides_array):
-            slide_url = fetch(presentation.slide_thumbnail_url(slide["objectId"])).json()[
-                "contentUrl"
-            ]
             path = os.path.join(presentation.slides_dir, f"{i+1:03d}.png")
-            print(f"Downloading {slide_url} -> {path}")
-            with open(path, "wb") as f:
-                thumbnail_response = fetch(slide_url)
-                f.write(thumbnail_response.content)
+            if slide_filter(i + 1):
+                slide_url = fetch(presentation.slide_thumbnail_url(slide["objectId"])).json()[
+                    "contentUrl"
+                ]
+                print(f"Downloading {slide_url} -> {path}")
+                with open(path, "wb") as f:
+                    thumbnail_response = fetch(slide_url)
+                    f.write(thumbnail_response.content)
+                # We're rate-limited on the server side to 100 expensive read requests per 100 seconds.
+                # Avoid going over:
+                time.sleep(0.6)
             print(f"        '{path}',", file=controller_js)
-            # We're rate-limited on the server side to 100 expensive read requests per 100 seconds.
-            # Avoid going over:
-            time.sleep(0.6)
 
         controller_js.write(
             """        ];
