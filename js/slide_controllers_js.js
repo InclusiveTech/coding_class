@@ -133,7 +133,6 @@ app.controller('SlideController', function($scope, $sce, localStorageService) {
         'slides/js-curriculum/117.png',
         'slides/js-curriculum/118.png',
         'slides/js-curriculum/119.png',
-        'slides/js-curriculum/120.png',
         ];
     var html = localStorageService.get('html') || "";
     $scope.data = {htmlString:html, trustedVersion:html}
